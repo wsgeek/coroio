@@ -33,6 +33,9 @@ target_include_directories(coroio PUBLIC ${URING_INCLUDE_DIRS} ${OPENSSL_INCLUDE
 target_link_directories(coroio PUBLIC ${URING_LIBRARY_DIRS} ${OPENSSL_LIBRARY_DIRS})
 target_link_libraries(coroio PUBLIC ${URING_LIBRARIES} ${OPENSSL_LIBRARIES})
 
+target_include_directories(coroio PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+
+
 macro(target name source)
   add_executable(${name} ${source})
   target_link_libraries(${name} coroio)
@@ -48,13 +51,13 @@ macro(ut name source)
   set_tests_properties(${name} PROPERTIES ENVIRONMENT "CMOCKA_MESSAGE_OUTPUT=xml;CMOCKA_XML_FILE=${name}.xml")
 endmacro()
 
-target(timers examples/timers.cpp)
-target(echotest examples/echotest.cpp)
-target(echoserver examples/echoserver.cpp)
-target(echoclient examples/echoclient.cpp)
-target(sslechoclient examples/sslechoclient.cpp)
-target(sslechoserver examples/sslechoserver.cpp)
-target(resolver examples/resolver.cpp)
-target(bench examples/bench.cpp)
+target(coroio_timers examples/timers.cpp)
+target(coroio_echotest examples/echotest.cpp)
+target(coroio_echoserver examples/echoserver.cpp)
+target(coroio_echoclient examples/echoclient.cpp)
+target(coroio_sslechoclient examples/sslechoclient.cpp)
+target(coroio_sslechoserver examples/sslechoserver.cpp)
+target(coroio_resolver examples/resolver.cpp)
+target(coroio_bench examples/bench.cpp)
 
-ut(tests tests/tests.cpp)
+ut(coroio_tests tests/tests.cpp)

@@ -2,10 +2,9 @@
 #include <array>
 #include <exception>
 #include <sstream>
-#include <stdarg.h>
 #include <stddef.h>
-#include <setjmp.h>
 #include <signal.h>
+#include <setjmp.h> // IWYU pragma: keep
 
 #include <coroio/all.hpp>
 
@@ -190,7 +189,7 @@ void test_write_after_accept(void**) {
     TVoidSuspendedTask h2 = [](TSocket* socket, char* buf, int size) -> TVoidSuspendedTask
     {
         TSocket clientSocket = std::move(co_await socket->Accept());
-        auto s = co_await clientSocket.WriteSome(buf, size);
+        [[maybe_unused]] auto s = co_await clientSocket.WriteSome(buf, size);
         co_return;
     }(&socket, send_buf, sizeof(send_buf));
 
@@ -386,7 +385,7 @@ void test_connection_refused_on_read(void**) {
 template<typename TPoller>
 void test_timeout(void**) {
     using TLoop = TLoop<TPoller>;
-    using TSocket = typename TPoller::TSocket;
+    // using TSocket = typename TPoller::TSocket;
     TLoop loop;
     auto now = std::chrono::steady_clock::now();
     auto timeout = std::chrono::milliseconds(100);
@@ -655,7 +654,7 @@ nameserver 127.0.0.2
 template<typename TPoller>
 void test_resolver(void**) {
     using TLoop = TLoop<TPoller>;
-    using TSocket = typename TPoller::TSocket;
+    // using TSocket = typename TPoller::TSocket;
 
     TLoop loop;
     TResolver<TPollerBase> resolver(loop.Poller());
@@ -681,7 +680,7 @@ void test_resolver(void**) {
 template<typename TPoller>
 void test_resolve_bad_name(void**) {
     using TLoop = TLoop<TPoller>;
-    using TSocket = typename TPoller::TSocket;
+    // using TSocket = typename TPoller::TSocket;
 
     TLoop loop;
     TResolver<TPollerBase> resolver(loop.Poller());

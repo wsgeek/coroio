@@ -75,7 +75,6 @@ std::chrono::microseconds run_one(int num_pipes, int num_writes, int num_active)
     vector<coroutine_handle<>> handles;
     pipes.reserve(num_pipes*2);
     handles.reserve(num_pipes+num_writes);
-    int fired = 0;
     for (int i = 0; i < num_pipes; i++) {
         int p[2];
         if (pipe(&p[0]) < 0) {

@@ -28,7 +28,6 @@ void TKqueue::Poll()
     for (auto& ch : Changes_) {
         int fd = ch.Fd;
         struct kevent kev = {};
-        bool changed = false;
         auto& ev = InEvents_[fd];
 
         if (ch.Handle) {
